@@ -1,0 +1,41 @@
+# Rust
+target/
+Cargo.lock
+**/*.rs.bk
+*.pdb
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Agent specific
+agent_id.txt
+
+# Cryptographic keys - NEVER COMMIT!
+private_key.pem
+public_key.pem
+agent_private_key.pem
+agent_public_key.pem
+*.key
+*.pem
+aes_key.txt
+
+# Environment variables - NEVER COMMIT!
+.env
+
+VM/
+
+__pycache__/
+dist_agent/
+agent_builds/
+data/

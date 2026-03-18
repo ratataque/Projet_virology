@@ -1,0 +1,29 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt flask flask-cors gunicorn
+
+# Copy controller and static files
+COPY controller.py .
+COPY generate_keys.py .
+COPY frontend/out /app/static
+
+# Create directory for frontend static files
+RUN mkdir -p /app/static
+
+# Create persistent data directory for credentials storage
+RUN mkdir -p /app/data
+
+# Copy pre-built frontend (will be mounted or copied during build)
+# COPY frontend/out /app/static
+
+# Keys will be mounted as volumes at runtime
+# COPY private_key.pem .
+# COPY aes_key.txt .
+
+EXPOSE 8080
+
+CMD ["gunicorn", "-b", "0.0.0.0:8080", "controller:app"]

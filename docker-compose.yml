@@ -1,0 +1,61 @@
+services:
+    c2-server:
+        build:
+            context: .
+            dockerfile: Dockerfile.server
+        ports:
+            - "8080:8080"
+        volumes:
+            - ./private_key.pem:/app/private_key.pem:ro
+            - ./aes_key.txt:/app/aes_key.txt:ro
+            - ./frontend/out:/app/static:ro
+            - c2-data:/app/data
+        env_file:
+            - .env
+        networks:
+            - c2-network
+
+    frontend:
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+        ports:
+            - "3000:3000"
+        environment:
+            - NEXT_PUBLIC_API_URL=http://c2-server:8080
+        depends_on:
+            - c2-server
+        networks:
+            - c2-network
+
+    # c2-agent:
+    #   build:
+    #     context: ./c2_agent
+    #     dockerfile: Dockerfile
+    #     args:
+    #       - GITHUB_TOKEN=${GITHUB_TOKEN}
+    #       - GIST_ID=${GIST_ID}
+    #   depends_on:
+    #     - c2-server
+    #   networks:
+    #     - c2-network
+    #
+    # c2-agent-builder:
+    #   build:
+    #     context: ./c2_agent
+    #     dockerfile: Dockerfile.windows
+    #     args:
+    #       - GITHUB_TOKEN=${GITHUB_TOKEN}
+    #       - GIST_ID=${GIST_ID}
+    #   volumes:
+    #     - ./agent_builds:/shared
+    #   working_dir: /app
+    #   networks:
+    #     - c2-network
+
+networks:
+    c2-network:
+        driver: bridge
+
+volumes:
+    c2-data:

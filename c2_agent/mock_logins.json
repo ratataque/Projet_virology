@@ -1,0 +1,50 @@
+[
+  {
+    "origin_url": "https://accounts.google.com/signin",
+    "username_value": "john.doe@gmail.com",
+    "password_value": "RzAwZ2wzUEBzc3cwcmQhMjAyNQ==",
+    "date_created": "2025-01-15T10:30:00Z"
+  },
+  {
+    "origin_url": "https://github.com/login",
+    "username_value": "johndoe-dev",
+    "password_value": "Z2hfczNjdXIzX3QwazNuXzk4NyE=",
+    "date_created": "2025-02-01T14:20:00Z"
+  },
+  {
+    "origin_url": "https://twitter.com/login",
+    "username_value": "johndoe42",
+    "password_value": "VHcxdHQzcl9YX3BAc3Mh",
+    "date_created": "2025-03-10T08:15:00Z"
+  },
+  {
+    "origin_url": "https://login.microsoftonline.com",
+    "username_value": "john.doe@outlook.com",
+    "password_value": "TSRfMGZmMWMzXzIwMjUhc2Vj",
+    "date_created": "2025-04-05T16:45:00Z"
+  },
+  {
+    "origin_url": "https://www.facebook.com/login",
+    "username_value": "john.doe.fb",
+    "password_value": "RmJfbTN0YV9wQDU1IQ==",
+    "date_created": "2025-05-20T09:00:00Z"
+  },
+  {
+    "origin_url": "https://discord.com/login",
+    "username_value": "johndoe#1337",
+    "password_value": "RDFzYzByZF9nQG0zcl85OSE=",
+    "date_created": "2025-06-12T20:30:00Z"
+  },
+  {
+    "origin_url": "https://www.amazon.com/ap/signin",
+    "username_value": "john.doe@gmail.com",
+    "password_value": "QW16bl9zaDBwcDNyXzIwMjUh",
+    "date_created": "2025-07-01T11:15:00Z"
+  },
+  {
+    "origin_url": "https://www.netflix.com/login",
+    "username_value": "johndoe_stream",
+    "password_value": "TjN0ZmwxeF8mX2NoMWxsIQ==",
+    "date_created": "2025-08-18T19:00:00Z"
+  }
+]

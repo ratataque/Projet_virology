@@ -1,0 +1,60 @@
+═══════════════════════════════════════════════════════════════
+  C2 POC - Quick Start Guide
+═══════════════════════════════════════════════════════════════
+
+SETUP & BUILD (One Command)
+─────────────────────────────────────────────────────────────
+1. Run Setup Script:
+   ./setup.sh
+   
+   This will:
+   • Create .env from template (if needed)
+   • Generate encryption keys
+   • Install Python dependencies
+   • Copy config files to agent directory
+   • Build the Rust agent
+   
+2. If First Run:
+   Edit .env and add:
+   - GITHUB_TOKEN (get from https://github.com/settings/tokens)
+   - GIST_ID (create at https://gist.github.com/)
+   
+   Then run ./setup.sh again
+
+USAGE
+─────────────────────────────────────────────────────────────
+Run Agent:
+  ./c2_agent/target/release/c2_agent
+
+Run Controller:
+  python3 controller.py
+
+Controller Commands:
+  1 - List Agents
+  2 - Send Task (ping, info, exec <cmd>)
+  3 - Get Result
+  4 - Clear Task
+  5 - Wipe Gist
+  6 - Exit
+
+UTILITIES
+─────────────────────────────────────────────────────────────
+Wipe Gist:
+  python3 wipe_gist.py
+  
+  Option 1: Clear files only (keeps Gist ID, preserves history)
+  Option 2: Delete entire Gist (complete wipe, removes history)
+           Requires: Creating new Gist + updating GIST_ID
+
+ENCRYPTION
+─────────────────────────────────────────────────────────────
+Commands: AES-256-GCM + RSA-2048 signature
+Results:  RSA-2048 encryption (chunked >500KB)
+
+FILES
+─────────────────────────────────────────────────────────────
+Tasks:   {agent_id}_updater_log.json
+Results: {agent_id}_debug.json
+
+Full documentation: README.md
+═══════════════════════════════════════════════════════════════
